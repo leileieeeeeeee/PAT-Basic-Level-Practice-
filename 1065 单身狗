@@ -1,1 +1,79 @@
+//pair的使用
 
+#include<iostream>
+#include<cstring>
+#include<vector>
+#include<algorithm>
+#include<utility>
+#include<map>
+
+using namespace std;
+
+void single( vector<pair<int,bool> >&a,const vector<pair<int,int> >&b){
+	for(int i=0;i<a.size() ;++i){
+		if(a[i].second==true){
+			for(int j=0;j<b.size();++j){
+			if(a[i].first==b[j].first){
+			for(int h=0;h<a.size();++h){
+				if(b[j].second==a[h].first) {
+					a[i].second=false;
+					a[h].second=false;
+				}
+			}
+	     	}
+	     	else {
+	     	if(a[i].first==b[j].second){
+			for(int h=0;h<a.size();++h){
+				if(b[j].first==a[h].first) {
+					a[i].second=false;
+					a[h].second=false;
+				}
+		 	}
+	     	}
+			 }
+	     	
+			}
+			
+		}
+	
+	}
+}
+bool  compare(int&a, int&b){
+	return a<b;
+}
+
+int main(){
+	int n;
+	cin>>n;
+	vector<pair<int, int> > couple;
+	int a,b;
+	for(int i=0;i<n;++i){
+		cin>>a>>b;
+		couple.push_back(make_pair(a,b)); 
+	}
+	int m;
+	cin>>m;
+	vector<pair<int,bool> > all;
+	int number;
+	for(int i=0;i<m;++i){
+		cin>>number;
+		all.push_back(make_pair(number,true)) ;
+	}
+	single(all,couple);
+	int count=0;
+	vector<int> show;
+	for(int i=0;i<all.size() ;++i){
+		if(all[i].second==true){
+			count++;
+			show.push_back(all[i].first);
+		}
+	}
+	sort(show.begin() ,show.end() ,compare);
+	cout<<count<<endl;
+	for(int i=0;i<show.size() ;++i){
+		if(i>0) cout<<" ";
+		cout<<show[i];
+	}
+	
+	return 0;
+} 
