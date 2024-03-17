@@ -1,0 +1,144 @@
+#include<iostream>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+
+
+class student{
+	public:
+		string name;
+		int height;
+	student(string str, int h):name(str),height(h){
+	};
+	student():name("0"),height(0){//³õÊ¼¹¹Ôìº¯Êý²»ÖªµÀÊÇ²»ÊÇÕâÑù£» 
+	}
+	student& operator=(const student& other) {
+        if (this != &other) { // ·ÀÖ¹×Ô¸³Öµ
+            name = other.name;
+            height = other.height;
+        }
+        return *this; // ·µ»Øµ±Ç°¶ÔÏóµÄÒýÓÃ
+    }
+	void printname(){
+		cout<<name;
+	}
+};
+bool hcompare(student&a,student&b){
+	return a.height<b.height;
+}
+void sarr(vector<student>&a, vector<vector<student> >&b, int&n, int &k){
+	sort(a.begin(),a.end(),hcompare);
+	int m=n%k;
+	int s=n/k;
+//for(int i=0;i<a.size();++i){
+//	a[i].printname();}
+	for(int i=0;i<n-m;++i){
+		b[i/s][i%s]=a[i];
+//		cout<<"b["<<i/s<<"]["<<i%s<<"]";
+//		b[i/s][i%s].printname();
+//		cout<<" "	;
+	}
+	if(m!=0){
+	for(int i=n-m, j=0;i<a.size();++i,++j){
+		b[k-1][s+j]=a[i];
+//		cout<<"b["<<k-1<<"]["<<s+j<<"]";
+//		b[k-1][s+j].printname();
+//		cout<<" "	;
+	}
+   }
+//   cout<<endl;
+//   	for(int i=0;i<k;++i){
+//		for(int j=0;j<b[i].size();++j){
+//			b[i][j].printname();
+//		}
+//	}
+};
+
+void columnposition(vector<vector<student> >&a, int &b){//ÈçºÎ×Ô¶¯¶ÁÈ¡¶þÎ¬Êý×éÃ¿ÐÐ¶àÉÙ¸ö£¿ 
+	int c=a[b].size();
+	int d;
+	int count=0;
+		for(int j=0;j<c;++j){
+		if(	a[b][j].name!="0") count++;
+		}
+		c=count;
+//		cout<<" c="<<c;
+	vector<student> temp(c,student("0",0));
+  d=c/2;
+
+    temp[d]=a[b][c-1];
+//	cout<<"temp["<<d<<"]";
+//	temp[d].printname();
+//	cout<<d;
+
+//	cout<<temp[d].name;
+     
+
+
+//	a[b][c-1].printname();
+	int left=d-1;
+	int right=d+1;
+
+
+	int s=c-2;
+	while(s>=0){
+		if(left>=0) {
+		temp[left]=a[b][s];
+//		cout<<"a["<<b<<"]["<<s<<"]";
+//		cout<<"temp["<<left<<"]";
+//		temp[left].printname();
+//		
+//		cout<<" ";
+		--s;
+		--left;
+//		cout<<" i:"<<i;
+	}
+		if(right<=c-1){
+		temp[right]=a[b][s];
+//		cout<<"a["<<b<<"]["<<s<<"]";
+//		cout<<"temp["<<right<<"]";
+//		temp[right].printname();
+//		cout<<" ";
+		--s;
+		++right;
+//		cout<<" i:"<<i;
+		}
+	
+
+	}
+	for(int j=0;j<c;++j){
+		if(j>0) cout<<" ";
+		temp[j].printname();
+	}
+	}
+	
+int main(){
+	int n, k;
+	cin>>n>>k;
+	vector<student> all(n,{"0",0});
+	vector<vector<student> > matrix(k,vector<student>(n/k+n%k,{"0",0})) ;
+	for(int i=0;i<n;++i){
+		cin>>all[i].name>>all[i].height;
+	}
+//	for(int i=0;i<n;++i){
+//		all[i].printname();
+//	}
+	sarr(all,matrix,n,k);
+	
+//	   	for(int i=0;i<k;++i){
+//		for(int j=0;j<matrix[i].size();++j){
+//			matrix[i][j].printname();
+//		}
+//	}
+
+	for(int i=k-1;i>=0;i--){
+//		cout<<" i:"<<i;
+       if(i<k-1) 	cout<<endl;
+		columnposition(matrix ,i );
+		
+	
+	}
+
+	return 0;
+}
