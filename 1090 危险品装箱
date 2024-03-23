@@ -1,0 +1,58 @@
+//ÓÃpairÀ´×ö
+#include<iostream>
+#include<vector>
+#include<cstring>
+#include<utility>
+ using namespace std;
+ 
+ 
+ int main(){
+ 	vector<pair<string,string> > list;
+ 	vector<vector<string> > thing;
+ 	vector<string> num;
+ 	vector<pair<string,string> > temp;
+ 	int n,m,s;
+ 	cin>>n>>m;
+ 	for(int i=0;i<n;++i){
+ 		string str1,str2;
+ 		cin>>str1>>str2;
+ 		list.push_back(make_pair(str1,str2)) ;
+	 }
+ 	for(int i=0;i<m;++i){
+ 		cin>>s;
+ 		for(int j=0;j<s;++j){
+ 		string id;
+ 		cin>>id;
+ 		num.push_back(id); 
+		 }
+		 thing.push_back(num) ;
+		 num.clear();
+	 }
+
+ 	for(int i=0;i<m;++i){
+ 		bool judge=true;
+ 		if(i>0) cout<<endl;
+ 		temp=list;
+ 		for(int j=0;j<thing[i].size() ;++j){
+ 			for(int k=0;k<n;++k){
+ 			 if(thing[i][j]==temp[k].first)	 {
+// 			 	cout<<temp[k].first;
+ 			 	temp[k].first="0";
+ 			 	if(temp[k].second=="0") {
+ 			 		judge=false;
+ 			 		break;
+				  }
+			  }
+ 			else if(thing[i][j]==temp[k].second){
+// 			 	cout<<temp[k].second;
+			  temp[k].second="0"; 
+			  if(temp[k].first=="0") {
+ 			 		judge=false;
+ 			 		break;}	
+			 }
+		 }}
+		 if(judge) cout<<"Yes";
+		 else cout<<"No";
+	 }
+ 	return 0;
+ } 
