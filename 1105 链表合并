@@ -1,0 +1,83 @@
+#include<vector>
+#include<iostream>
+#include<utility>
+#include<string>
+#include<algorithm>
+
+using namespace std;
+
+class node{
+	public:
+		int data;
+		string next;
+	node():data(0),next("0"){	};
+	node(int a, string str):data(a),next(str){};
+};
+int main(){
+	vector<pair<string,node> > l1;
+	vector<pair<string,node> > l2;
+	vector<pair<string,node> > ori;
+	string f1,f2;
+	int n;
+	cin>>f1>>f2>>n;
+	for(int i=0;i<n;++i){
+		string fi,ne;
+		int num;
+	cin>>fi>>num>>ne;
+	ori.push_back(make_pair(fi,node(num,ne))) ;	
+	}
+	while(f1!="-1"){
+	for(int i=0;i<ori.size() ;++i){
+		if(ori[i].first==f1){
+			l1.push_back(ori[i]);
+			f1=ori[i].second.next;
+//			cout<<ori[i].first<<" "<<ori[i].second.data<<" "<<ori[i].second.next<<endl;
+			break;
+		}
+	}
+	}
+	while(f2!="-1"){
+	for(int i=0;i<ori.size() ;++i){
+		if(ori[i].first==f2){
+			l2.push_back(ori[i]);
+//			cout<<ori[i].first<<" "<<ori[i].second.data<<" "<<ori[i].second.next<<endl;
+			f2=ori[i].second.next;
+			break;
+		}
+	}
+	}
+	vector<pair<string,node> > temp;
+	if(l1.size() <l2.size() ){
+		temp=l1;
+		l1=l2;
+		l2=temp;
+	}
+	vector<pair<string,node> > result;
+	int j=0;
+	int k=0;
+   	int s=l2.size()-1 ;
+    while(j<l1.size() && s>=0){
+    	if(k%3!=2){
+    		result.push_back(l1[j]) ;
+    		++j;		
+		}
+		else{
+			result.push_back(l2[s]);
+			--s; 
+		}
+		++k;	
+	}
+	while (j < l1.size()) {
+        result.push_back(l1[j++]);
+    }
+	
+	 for(int i=0;i<n-1;++i){
+	 	result[i].second.next=result[i+1].first;
+	 }
+	 	result[n-1].second.next="-1";
+	for(int i=0;i<n;++i){
+		if(i>0) cout<<endl;
+	 	cout<<result[i].first<<" "<<result[i].second.data<<" "<<result[i].second.next;
+	 }
+	return 0;
+}
