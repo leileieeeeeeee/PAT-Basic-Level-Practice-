@@ -1,0 +1,49 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int main(){
+	vector<string> fri;
+	string oldfri="99999999";
+	string oldvi="99999999";
+	string fridate;
+	string visdate;
+	int n,m;
+	cin>>n;
+	for(int i=0;i<n;++i){
+		string s;
+		cin>>s;
+		fri.push_back(s); 
+	}
+	cin>>m;
+	int count=0;
+		for(int i=0;i<m;++i){
+		string s;
+		cin>>s;
+		vector<string>::iterator it=find(fri.begin() ,fri.end() ,s);
+		if(it!=fri.end()) {
+			count++;
+			if(oldfri>s.substr(6,8)) {
+			oldfri=s.substr(6,8);
+			fridate=s;	
+			}
+		}
+		else {
+			if(oldvi>s.substr(6,8)) {
+			oldvi=s.substr(6,8);
+			visdate=s;	
+			}
+			
+		}
+	}
+	cout<<count<<endl;
+	if(count!=0){
+	
+		cout<<fridate;
+	}
+	else cout<<visdate;
+	return 0;
+}
