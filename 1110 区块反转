@@ -1,0 +1,80 @@
+#include<iostream>
+#include<utility>
+#include<algorithm>
+#include<string>
+#include<vector>
+
+using namespace std;
+class node{
+	public:
+		int data;
+		string next;
+	node():data(0),next("0"){};
+	node(int a, string str):data(a),next(str){};
+};
+vector<pair<string , node> > ori;
+vector<pair<string , node> > ope;
+vector<pair<string , node> > block;
+vector< vector<pair<string , node> > > all;
+vector<pair<string , node> > result;
+int main(){
+	string fi;
+	int n,k;
+	cin>>fi>>n>>k;
+	for(int i=0;i<n;++i){
+		string f;
+		int num;
+		string ne;
+		cin>>f>>num>>ne;
+		ori.push_back(make_pair(f,node(num,ne))); 
+	}
+	while(fi!="-1"){
+		for(int i=0;i<n;++i){
+			if(ori[i].first==fi){
+				ope.push_back(ori[i]);
+				fi=ori[i].second.next; 
+			}
+		}
+	}
+//	for(int i=0;i<ope.size() ;++i){
+//		if(i>0) cout<<endl;
+//		cout<<ope[i].first<<" "<<ope[i].second.data<<" "<<ope[i].second.next;
+//	}
+	for(int i=0;i<n;++i){
+		if(i%k==k-1&&!block.empty()){
+			block.push_back(ope[i]); 
+//		for(int j=0;j<block.size() ;++j){
+//		if(j>0) cout<<endl;
+//		cout<<block[j].first<<" "<<block[j].second.data<<" "<<block[j].second.next;
+//	} 
+			all.push_back(block);
+			block.clear() ;
+		}
+		else if(i!=n-1){
+			block.push_back(ope[i]);	
+		}
+		else{
+			block.push_back(ope[i]);
+			all.push_back(block);
+//		for(int j=0;j<block.size() ;++j){
+//		if(j>0) cout<<endl;
+//		cout<<block[j].first<<" "<<block[j].second.data<<" "<<block[j].second.next;
+//	} 
+		}
+	}
+	reverse(all.begin() ,all.end());
+	for(int i=0;i<all.size() ;++i){
+		for(int j=0;j<all[i].size() ;++j){
+			result.push_back(all[i][j]); 
+		}
+	}
+	for(int i=0;i<result.size()-1 ;++i){
+		result[i].second.next=result[i+1].first;
+	}
+	result[result.size()-1].second.next="-1";
+	for(int i=0;i<result.size() ;++i){
+		if(i>0) cout<<endl;
+		cout<<result[i].first<<" "<<result[i].second.data<<" "<<result[i].second.next;
+	}
+	return 0;
+}
